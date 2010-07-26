@@ -1,16 +1,86 @@
+{% load i18n %}
 
-    <div class="photo-gallery{% if css %} {{ css }}{% endif %}">
-
-        <h2><a href="{{ gallery.get_absolute_url }}">{{ gallery.title }}</a></h2>
-
-        {% for photo in gallery.sample|slice:sample_size %}
-
-        <div class="gallery-photo">
-
-            <a href="{{ photo.get_absolute_url }}"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a>
-
+<!-- We only want the thunbnails to display when javascript is disabled -->
+<script type="text/javascript"> 
+            document.write('<style>.noscript { display: none; }</style>');
+</script>
+<h1>{{ gallery.title }}</h1>
+<!-- Start Advanced Gallery Html Containers -->
+<div id="gallery" class="content">
+    <div id="controls" class="controls"></div>
+        <div class="slideshow-container">
+            <div id="loading" class="loader"></div>
+            <div id="slideshow" class="slideshow"></div>
         </div>
-
+    <div id="caption" class="caption-container"></div>
+</div>
+<div id="thumbs" class="navigation">
+    <ul class="thumbs noscript">
+        {% for photo in gallery.public %}
+            <li><a class="thumb" name="{{ photo.title }}" title="{{ photo.title }}" href="{{ photo.get_display_url }}">
+                    <img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}" />
+                </a>
+                <div class="caption">
+                    <div class="image-title">{{ photo.title }}</div>
+                    <div class="image-desc">{{ photo.caption }}</div>
+                </div>
+            </li>
         {% endfor %}
-
-    </div>
+    </ul>
+</div>
+<div style="clear: both;"></div>
+<script type="text/javascript"> 
+            jQuery(document).ready(function($) {
+                // We only want these styles applied when javascript is enabled
+                $('div.navigation').css({'width' : '250px', 'float' : 'left'});
+                $('div.content').css('display', 'block');
+ 
+                // Initially set opacity on thumbs and add
+                // additional styling for hover effect on thumbs
+                var onMouseOutOpacity = 0.67;
+                $('#thumbs ul.thumbs li').opacityrollover({
+                    mouseOutOpacity:   onMouseOutOpacity,
+                    mouseOverOpacity:  1.0,
+                    fadeSpeed:         'fast',
+                    exemptionSelector: '.selected'
+                });
+                
+                // Initialize Advanced Galleriffic Gallery
+                var gallery = $('#thumbs').galleriffic({
+                    delay:                     2500,
+                    numThumbs:                 6,
+                    preloadAhead:              10,
+                    enableTopPager:            true,
+                    enableBottomPager:         true,
+                    maxPagesToShow:            7,
+                    imageContainerSel:         '#slideshow',
+                    controlsContainerSel:      '#controls',
+                    captionContainerSel:       '#caption',
+                    loadingContainerSel:       '#loading',
+                    renderSSControls:          true,
+                    renderNavControls:         true,
+                    playLinkText:              'Play Slideshow',
+                    pauseLinkText:             'Pause Slideshow',
+                    prevLinkText:              '&lsaquo; Previous Photo',
+                    nextLinkText:              'Next Photo &rsaquo;',
+                    nextPageLinkText:          'Next &rsaquo;',
+                    prevPageLinkText:          '&lsaquo; Prev',
+                    enableHistory:             false,
+                    autoStart:                 false,
+                    syncTransitions:           true,
+                    defaultTransitionDuration: 900,
+                    onSlideChange:             function(prevIndex, nextIndex) {
+                        // 'this' refers to the gallery, which is an extension of $('#thumbs')
+                        this.find('ul.thumbs').children()
+                            .eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end()
+                            .eq(nextIndex).fadeTo('fast', 1.0);
+                    },
+                    onPageTransitionOut:       function(callback) {
+                        this.fadeTo('fast', 0.0, callback);
+                    },
+                    onPageTransitionIn:        function() {
+                        this.fadeTo('fast', 1.0);
+                    }
+                });
+            });
+</script>

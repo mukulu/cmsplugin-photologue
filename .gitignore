@@ -1,4 +1,7 @@
-.pyc
+.hg
+.hgignore
+.hgtags
+*.pyc
 media/
 fabfile
 nbproject/
