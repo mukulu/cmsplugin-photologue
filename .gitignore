@@ -1,0 +1,15 @@
+.pyc
+media/
+fabfile
+nbproject/
+ref/
+gallery zips/
+virtualenvs/
+
+*.textClipping
+.DS_Store
+project.xml
+*.psd
+~*
+*backup
+*svn
