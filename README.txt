@@ -6,8 +6,8 @@ Download: http://bitbucket.org/tehfink/cmsplugin-photologue/
 
 Requirements:
 - django-photologue >= trunk r407
-- django-cms-2 >= master 15af8981362ea61699e3d7da03aaac4b40b5fecd
-- django = 1.1.1
+- django-cms = trunk
+- django = 1.2.1
 
 Setup
 - make sure requirements are installed and properly working
