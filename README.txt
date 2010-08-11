@@ -26,7 +26,7 @@ i'm going to _try_ and track the most recent django-cms release and the current 
 Optional
 - the photologue default templates extend a 'base.html', while django-cms uses a default 'index.html'. quick solution: create a 'base.html' placeholder template which extends 'index.html'. see 'cmsplugin_photologue/templates/base.html' for an example.
 - recommended: install cms-context_processors (or your own), so {{ site }} will work in photologue pages attached to cms pages. NB: this should be fixed in latest django-cms trunk. does it work for anyone?
-- define CMSPLUGIN_PHOTOLOGUE_SAMPLE_SIZE, CMSPLUGIN_PHOTOLOGUE_CSS_CHOICES in settings.py
+- define CMSPLUGIN_PHOTOLOGUE_SAMPLE_SIZE, CMSPLUGIN_PHOTOLOGUE_CSS in settings.py
 - copy cmsplugin_photologue/templates/plugins/ to your project directory
 
 Todo:
@@ -42,7 +42,7 @@ Example Projects:
 
 
 Examples (settings.py):
-CMSPLUGIN_PHOTOLOGUE_CSS_CHOICES = (('0', ''),('1', 'left'),('2', 'right'),('3', 'center'),) )
+CMSPLUGIN_PHOTOLOGUE_CSS = (('0', ''),('1', 'left'),('2', 'right'),('3', 'center'),) )
 - adds an optional css class to the gallery or photo enclosing div in the plugin templates
 
 CMSPLUGIN_PHOTOLOGUE_SAMPLE_SIZE = 3
